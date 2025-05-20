@@ -109,12 +109,18 @@
     form: '#register-form',
     errorSelector: '.form-message',
     rule: [
-      Validator.isName('#fullname'),
+      Validator.isRequired('#fullname'),
+      Validator.isRequired('#email'),
       Validator.isEmail('#email'),
-      Validator.isPassword('#password'),
-      Validator.isPassword('#confirm-password')
-
-    ]
+      Validator.minLength('#password', 6),
+      Validator.minLength('#confirm-password', 6),
+      Validator.isConfirmed('#confirm-password', function() {
+        return document.querySelector('#register-form #password').value
+      })
+    ],
+    onSubmit: function(data) {
+      console.log(data)
+    }
   })
 </script>
 </body>
